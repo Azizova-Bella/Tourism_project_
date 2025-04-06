@@ -97,22 +97,28 @@ export default function CulturePage() {
 		<div className='min-h-screen'>
 			<div
 				ref={headerRef}
-				className='relative h-[50vh] flex items-center justify-center'
+				className='relative w-full h-[100vh] overflow-hidden flex items-center justify-center'
 			>
 				<div className='absolute inset-0 z-0'>
-					<Image
-						src='https://www.tajiksite.com/wp-content/uploads/2023/02/Tajikistan-Culture_775x350.jpg'
-						alt='Tajikistan Culture'
-						fill
-						className='object-cover brightness-50'
-						priority
-					/>
+					<iframe
+						className='w-full h-full pointer-events-none'
+						src='https://www.youtube.com/embed/tRyXac-p3hg?autoplay=1&mute=1&loop=1&playlist=tRyXac-p3hg&controls=0&showinfo=0&modestbranding=1&rel=0&cc_load_policy=0'
+						title='Tajikistan Culture Video'
+						allow='autoplay; fullscreen'
+						allowFullScreen
+					></iframe>
+
+					<div className='absolute inset-0 bg-gradient-to-b from-black/20 to-black/80'></div>
 				</div>
-				<div className='relative z-10 text-center text-white px-4'>
-					<h1 className='text-4xl md:text-5xl lg:text-6xl font-bold mb-4'>
+
+				{/* Content */}
+				<div className='relative z-10 text-center px-4 text-white max-w-4xl'>
+					<h1 className='text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight drop-shadow-md mb-6 animate-fadeIn'>
 						{t('tajik_culture')}
 					</h1>
-					<p className='text-xl max-w-3xl mx-auto'>{t('culture_intro')}</p>
+					<p className='text-xl md:text-2xl leading-relaxed drop-shadow-sm animate-fadeIn delay-200'>
+						{t('culture_intro')}
+					</p>
 				</div>
 			</div>
 
