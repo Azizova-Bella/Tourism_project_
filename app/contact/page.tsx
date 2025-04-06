@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { toast } from "@/components/ui/use-toast"
 import { MapPin, Phone, Mail, Send } from "lucide-react"
-
+import Image from 'next/image'
 export default function ContactPage() {
   const { t } = useTranslation()
   const formRef = useRef<HTMLDivElement>(null)
@@ -257,6 +257,18 @@ export default function ContactPage() {
           </Card>
         </div>
       </div>
+
+      <div className="flex justify-center mt-10">
+  <Image
+    src="/Logo.png"
+    alt="Logo"
+    width={900}
+    height={100}
+  />
+</div>
+
+
+
     </div>
   )
 }
