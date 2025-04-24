@@ -1,16 +1,20 @@
-let userConfig = undefined
-try {
-  userConfig = await import('./v0-user-next.config')
-} catch (e) {
-  // ignore error
+let userConfig = {}
+if (!process.env.VERCEL) {
+  try {
+    userConfig = require('./v0-user-next.config')
+  } catch (e) {
+    // локальный кастомный конфиг отсутствует — игнорируем
+  }
 }
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
+    // Отключает ошибки ESLint во время билда (на всякий случай)
     ignoreDuringBuilds: true,
   },
   typescript: {
+    // Отключает ошибки TypeScript при билде
     ignoreBuildErrors: true,
   },
   images: {
@@ -21,28 +25,26 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  ...mergeConfig(userConfig),
 }
 
-mergeConfig(nextConfig, userConfig)
-
-function mergeConfig(nextConfig, userConfig) {
-  if (!userConfig) {
-    return
-  }
-
+function mergeConfig(userConfig) {
+  const merged = {}
   for (const key in userConfig) {
     if (
       typeof nextConfig[key] === 'object' &&
-      !Array.isArray(nextConfig[key])
+      !Array.isArray(nextConfig[key]) &&
+      typeof userConfig[key] === 'object'
     ) {
-      nextConfig[key] = {
+      merged[key] = {
         ...nextConfig[key],
         ...userConfig[key],
       }
     } else {
-      nextConfig[key] = userConfig[key]
+      merged[key] = userConfig[key]
     }
   }
+  return merged
 }
 
-export default nextConfig
+module.exports = nextConfig
